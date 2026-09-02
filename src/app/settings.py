@@ -10,8 +10,9 @@ APP_NAME = "Kitchen Sink"
 
 
 def app_dir() -> Path:
-    """Directory the app was installed into."""
-    return Path(__file__).resolve().parent.parent
+    """Project root — the folder holding setup.bat, bin/ and .venv.
+    This file lives at <root>/src/app/settings.py, hence three levels up."""
+    return Path(__file__).resolve().parents[2]
 
 
 def config_dir() -> Path:

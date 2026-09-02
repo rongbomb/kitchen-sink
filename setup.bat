@@ -49,10 +49,13 @@ echo   [2/4] Upgrading pip ...
 
 echo   [3/4] Installing pywebview, yt-dlp and scdl ...
 echo         ^(needs internet — one-time download^)
-".venv\Scripts\python.exe" -m pip install -r requirements.txt || goto :fail
+".venv\Scripts\python.exe" -m pip install -r "src\requirements.txt" || goto :fail
 
 echo   [4/4] Fetching ffmpeg into .\bin ...
-".venv\Scripts\python.exe" -m app.ffmpeg_setup
+rem The app package lives under src\, so run the module from in there.
+pushd "src"
+"..\.venv\Scripts\python.exe" -m app.ffmpeg_setup
+popd
 
 echo.
 echo   Done. Launch the app with "Kitchen Sink.bat".

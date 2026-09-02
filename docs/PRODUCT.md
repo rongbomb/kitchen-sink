@@ -24,7 +24,7 @@ Dual-engine routing: scdl for SoundCloud originals and richer tags; yt-dlp for e
 
 ## Operating Context
 
-Runs locally on Windows (primary), with paths for macOS/Linux. First run via `setup.bat`; updates via `update.bat` when YouTube breaks. Preferences live in `%APPDATA%\KitchenSink\settings.json`.
+Runs locally on Windows (primary), with paths for macOS/Linux. First run via `setup.bat`; updates via `tools\update.bat` when YouTube breaks. Preferences live in `%APPDATA%\KitchenSink\settings.json`.
 
 ## Capabilities and Constraints
 

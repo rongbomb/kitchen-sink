@@ -1,5 +1,6 @@
 @echo off
-cd /d "%~dp0"
+rem This script lives in tools\, so step up to the project root first.
+cd /d "%~dp0.."
 title Kitchen Sink - Debug
 
 echo.
@@ -15,7 +16,7 @@ if not exist ".venv\Scripts\python.exe" (
 )
 
 set "KITCHEN_SINK_DEBUG=1"
-".venv\Scripts\python.exe" "KitchenSink.pyw"
+".venv\Scripts\python.exe" "src\KitchenSink.pyw"
 
 echo.
 echo   Kitchen Sink exited with code %errorlevel%.

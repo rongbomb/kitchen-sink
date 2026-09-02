@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Kitchen Sink — a YouTube & SoundCloud audio downloader wearing Aqua.
 
-Run me with:  pythonw KitchenSink.pyw    (or double-click "Kitchen Sink.bat")
+Run me with:  pythonw src/KitchenSink.pyw  (or double-click "Kitchen Sink.bat")
 """
 from __future__ import annotations
 

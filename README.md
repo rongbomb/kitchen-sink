@@ -29,8 +29,8 @@ somewhere handier. Change the shortcut's icon to taste.
 
 ## When a download suddenly stops working
 
-Run **`update.bat`**. YouTube changes its player regularly and yt-dlp ships
-fixes within a day or two — 95% of failures are just a stale yt-dlp.
+Run **`tools\update.bat`**. YouTube changes its player regularly and yt-dlp
+ships fixes within a day or two — 95% of failures are just a stale yt-dlp.
 
 ---
 
@@ -105,20 +105,27 @@ Uses yt-dlp's template syntax. Some useful ones:
 
 ```
 Kitchen Sink\
-  Kitchen Sink.bat     ← launch
-  setup.bat            ← first-time install
-  update.bat           ← refresh yt-dlp / scdl
-  KitchenSink.pyw      ← entry point
-  app\                 ← Python: settings, engine, ffmpeg, JS bridge
-  web\                 ← the Aqua interface (index.html, aqua.css, app.js)
-  bin\                 ← ffmpeg.exe / ffprobe.exe (created by setup)
-  .venv\               ← private Python environment (created by setup)
+  Kitchen Sink.bat            ← launch
+  setup.bat                   ← first-time install
+  README.md                   ← this file
+  src\
+    KitchenSink.pyw           ← entry point
+    requirements.txt
+    app\                      ← Python: settings, engine, ffmpeg, HTTP server
+    web\                      ← the Aqua interface (index.html, aqua.css, app.js)
+  docs\                       ← START HERE, plus design and product notes
+  tools\
+    Kitchen Sink (Debug).bat  ← run with a console attached
+    update.bat                ← refresh yt-dlp / scdl
+    build-release.bat/.ps1    ← build the distributable zip
+  bin\                        ← ffmpeg.exe / ffprobe.exe (created by setup)
+  .venv\                      ← private Python environment (created by setup)
 ```
 
 Preferences live in `%APPDATA%\KitchenSink\settings.json`.
 
-You can open `web\index.html` in any browser to look at the interface on its
-own — it falls back to sample data when Python isn't behind it.
+You can open `src\web\index.html` in any browser to look at the interface on
+its own — it falls back to sample data when Python isn't behind it.
 
 ---
 

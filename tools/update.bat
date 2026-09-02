@@ -1,5 +1,6 @@
 @echo off
-cd /d "%~dp0"
+rem This script lives in tools\, so step up to the project root first.
+cd /d "%~dp0.."
 title Kitchen Sink - Update
 
 echo.

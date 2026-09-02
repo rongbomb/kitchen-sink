@@ -22,7 +22,8 @@ Just double-click  Kitchen Sink.bat  — no setup again.
 
 IF DOWNLOADS STOP WORKING
 -------------------------
-Double-click  update.bat  (YouTube changes often; yt-dlp fixes follow within days).
+Double-click  tools\update.bat  (YouTube changes often; yt-dlp fixes follow
+within days).
 
 REQUIREMENTS
 ------------
@@ -38,7 +39,7 @@ Change the folder inside the app with "Choose…" next to Save to.
 
 IF SOMETHING GOES WRONG
 -----------------------
-Run  "Kitchen Sink (Debug).bat"  instead. It keeps a console open so errors
+Run  "tools\Kitchen Sink (Debug).bat"  instead. It keeps a console open so errors
 are visible rather than disappearing, and it writes details to:
   %APPDATA%\KitchenSink\error.log
 

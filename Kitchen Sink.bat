@@ -28,4 +28,4 @@ if errorlevel 1 (
   exit /b 1
 )
 
-start "" ".venv\Scripts\pythonw.exe" "KitchenSink.pyw"
+start "" ".venv\Scripts\pythonw.exe" "src\KitchenSink.pyw"

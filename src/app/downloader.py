@@ -174,7 +174,7 @@ class Engine:
         except Exception as exc:
             self.log(f"scdl is not installed ({exc}). "
                      "SoundCloud links will use yt-dlp instead. "
-                     "Run update.bat to install scdl.")
+                     "Run tools\\update.bat to install scdl.")
             self._scdl_cmd = None
             return None
         # scdl 3.x names its entry point _main; older releases used main.
