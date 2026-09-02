@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kitchen Sink</title>
+<link rel="stylesheet" href="aqua.css">
+</head>
+<body>
+
+<div id="window" class="window">
+
+  <!-- ─────────────────────────────── title bar ─────────────────────────── -->
+  <div class="titlebar pywebview-drag-region" id="titlebar">
+    <div class="lights" id="lights">
+      <button class="light close"  id="btn-close"  title="Close"><span>&#10005;</span></button>
+      <button class="light min"    id="btn-min"    title="Minimize"><span>&#8722;</span></button>
+      <button class="light zoom"   id="btn-zoom"   title="Zoom"><span>&#43;</span></button>
+    </div>
+    <div class="title">
+      <span class="proxy-icon" aria-hidden="true"></span>
+      <span>Kitchen Sink</span>
+    </div>
+    <div class="lights-spacer"></div>
+  </div>
+
+  <!-- ─────────────────────────────── top pane ──────────────────────────── -->
+  <div class="pane top-pane">
+
+    <div class="row url-row">
+      <input type="text" id="url" class="field field-url" spellcheck="false"
+             placeholder="Paste a YouTube or SoundCloud link…"
+             aria-label="Download URL"
+             autocomplete="off">
+      <button class="btn btn-small" id="btn-paste" title="Paste from clipboard (Ctrl+V)">Paste</button>
+      <button class="btn btn-default" id="btn-go">Download</button>
+    </div>
+
+    <div class="row options-row">
+      <label class="lbl">Format:</label>
+      <span class="popup">
+        <select id="fmt">
+          <option value="mp3">MP3</option>
+          <option value="m4a">AAC / M4A</option>
+          <option value="opus">Opus</option>
+          <option value="flac">FLAC</option>
+          <option value="wav">WAV</option>
+          <option value="original">Original (no re-encode)</option>
+        </select>
+        <span class="popup-arrows" aria-hidden="true"><i></i><b></b></span>
+      </span>
+
+      <label class="lbl" id="lbl-quality">Quality:</label>
+      <span class="popup" id="wrap-quality">
+        <select id="quality">
+          <option value="320">320 kbps</option>
+          <option value="256">256 kbps</option>
+          <option value="192">192 kbps</option>
+          <option value="128">128 kbps</option>
+          <option value="v0">VBR V0 (best)</option>
+        </select>
+        <span class="popup-arrows" aria-hidden="true"><i></i><b></b></span>
+      </span>
+
+      <span class="flex"></span>
+
+      <label class="check">
+        <input type="checkbox" id="art"><span class="box"></span>Artwork
+      </label>
+      <label class="check">
+        <input type="checkbox" id="tags"><span class="box"></span>Tags
+      </label>
+    </div>
+
+    <div class="row dest-row">
+      <label class="lbl">Save to:</label>
+      <span class="path-well" id="dest" title="Click to open in Explorer"></span>
+      <button class="btn btn-small" id="btn-choose">Choose…</button>
+    </div>
+  </div>
+
+  <!-- ──────────────────────────────── tabs ─────────────────────────────── -->
+  <div class="tabview">
+    <div class="tabstrip" role="tablist">
+      <button class="tab selected" data-tab="queue" role="tab">Queue</button>
+      <button class="tab" data-tab="log" role="tab">Log</button>
+      <button class="tab" data-tab="prefs" role="tab">Preferences</button>
+    </div>
+
+    <div class="tabbox">
+
+      <!-- queue ------------------------------------------------------------>
+      <section class="tabpanel active" data-panel="queue">
+        <div class="listhead">
+          <span class="col-name">Name</span>
+          <span class="col-status">Status</span>
+          <span class="col-prog">Progress</span>
+        </div>
+        <div class="list" id="queue">
+          <div class="empty" id="queue-empty">
+            <div class="empty-glyph"></div>
+            <p>Nothing in the queue.</p>
+            <p class="dim">Paste a link, drag one from your browser, or drop a .txt list.</p>
+            <ul class="empty-tips dim">
+              <li><kbd>Enter</kbd> starts a download from the URL field</li>
+              <li><kbd>Ctrl</kbd>+<kbd>L</kbd> selects the URL field</li>
+              <li><kbd>Ctrl</kbd>+<kbd>,</kbd> opens Preferences</li>
+            </ul>
+          </div>
+        </div>
+        <div class="drop-hint" id="drop-hint" aria-hidden="true">
+          <div class="drop-hint-inner">
+            <span class="drop-hint-icon"></span>
+            <p>Drop links here</p>
+          </div>
+        </div>
+        <div class="list-footer">
+          <button class="btn btn-small" id="btn-clear">Clear Finished</button>
+          <button class="btn btn-small" id="btn-retry" disabled title="Retry failed downloads">Retry Failed</button>
+          <button class="btn btn-small" id="btn-stop">Stop All</button>
+          <span class="flex"></span>
+          <button class="btn btn-small" id="btn-open">Open Folder</button>
+        </div>
+      </section>
+
+      <!-- log -------------------------------------------------------------->
+      <section class="tabpanel" data-panel="log">
+        <pre class="console" id="log"></pre>
+        <div class="list-footer">
+          <button class="btn btn-small" id="btn-clearlog">Clear Log</button>
+          <span class="flex"></span>
+          <span class="dim tiny" id="versions"></span>
+        </div>
+      </section>
+
+      <!-- preferences ------------------------------------------------------>
+      <section class="tabpanel" data-panel="prefs">
+        <div class="prefs">
+
+          <fieldset class="group">
+            <legend>SoundCloud</legend>
+            <div class="prow">
+              <label class="lbl w110">Engine:</label>
+              <span class="popup">
+                <select id="sc-engine">
+                  <option value="scdl">scdl (recommended)</option>
+                  <option value="yt-dlp">yt-dlp</option>
+                </select>
+                <span class="popup-arrows" aria-hidden="true"><i></i><b></b></span>
+              </span>
+              <span class="help">scdl grabs original uploads and richer tags.</span>
+            </div>
+            <div class="prow">
+              <label class="lbl w110">OAuth token:</label>
+              <input type="password" class="field flex" id="sc-token"
+                     placeholder="optional — for Go+ / private tracks" autocomplete="off">
+            </div>
+            <div class="prow">
+              <label class="lbl w110">Client ID:</label>
+              <input type="text" class="field flex" id="sc-client"
+                     placeholder="optional — auto-detected" autocomplete="off">
+            </div>
+            <div class="prow indent">
+              <label class="check"><input type="checkbox" id="sc-original">
+                <span class="box"></span>Prefer the original uploaded file when available</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Files</legend>
+            <div class="prow">
+              <label class="lbl w110">Name format:</label>
+              <input type="text" class="field flex mono" id="tmpl"
+                     spellcheck="false" autocomplete="off">
+            </div>
+            <div class="prow indent">
+              <label class="check"><input type="checkbox" id="sub">
+                <span class="box"></span>Put playlists in their own folder</label>
+            </div>
+            <div class="prow indent">
+              <label class="check"><input type="checkbox" id="archive">
+                <span class="box"></span>Skip anything I've already downloaded</label>
+            </div>
+            <div class="prow indent">
+              <label class="check"><input type="checkbox" id="lyrics">
+                <span class="box"></span>Save lyrics / subtitles alongside</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Playlists</legend>
+            <div class="prow">
+              <label class="lbl w110">A link with a<br>playlist:</label>
+              <span class="popup">
+                <select id="pl-mode">
+                  <option value="all">Downloads the whole playlist</option>
+                  <option value="single">Downloads only that track</option>
+                </select>
+                <span class="popup-arrows" aria-hidden="true"><i></i><b></b></span>
+              </span>
+            </div>
+            <div class="prow">
+              <label class="lbl w110">Tracks:</label>
+              <input type="text" class="field mono" id="pl-items" style="width:120px"
+                     placeholder="all" spellcheck="false" autocomplete="off">
+              <span class="help">Leave empty for all. Or 1-10, or 3,7,9.</span>
+            </div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Downloading</legend>
+            <div class="prow">
+              <label class="lbl w110">At once:</label>
+              <span class="popup narrow">
+                <select id="conc">
+                  <option value="1">1</option><option value="2">2</option>
+                  <option value="3">3</option><option value="4">4</option>
+                </select>
+                <span class="popup-arrows" aria-hidden="true"><i></i><b></b></span>
+              </span>
+              <label class="lbl" style="margin-left:14px">Cookies from:</label>
+              <span class="popup">
+                <select id="cookies">
+                  <option value="">None</option>
+                  <option value="chrome">Chrome</option>
+                  <option value="edge">Edge</option>
+                  <option value="firefox">Firefox</option>
+                  <option value="brave">Brave</option>
+                  <option value="opera">Opera</option>
+                  <option value="vivaldi">Vivaldi</option>
+                </select>
+                <span class="popup-arrows" aria-hidden="true"><i></i><b></b></span>
+              </span>
+            </div>
+            <div class="prow indent">
+              <label class="check"><input type="checkbox" id="sfx">
+                <span class="box"></span>Play a sound when a download finishes</label>
+            </div>
+            <div class="prow">
+              <label class="lbl w110">ffmpeg:</label>
+              <span class="ffmpeg-state" id="ff-state">checking…</span>
+              <button class="btn btn-small" id="btn-ffmpeg">Install ffmpeg…</button>
+            </div>
+          </fieldset>
+
+          <div class="prow" style="justify-content:flex-end">
+            <button class="btn btn-small" id="btn-about">About Kitchen Sink…</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ────────────────────────────── status bar ─────────────────────────── -->
+  <div class="statusbar">
+    <span class="status-led" id="led"></span>
+    <span id="status">Ready.</span>
+    <span class="flex"></span>
+    <span class="dim tiny" id="counts"></span>
+    <div class="grip" id="grip" title="Resize"></div>
+  </div>
+
+  <!-- ───────────────────────────────  sheet  ───────────────────────────── -->
+  <div class="sheet-shade" id="shade"></div>
+  <div class="sheet" id="sheet">
+    <div class="sheet-body">
+      <div class="sheet-icon" id="sheet-icon"></div>
+      <div class="sheet-text">
+        <h2 id="sheet-title">Title</h2>
+        <p id="sheet-msg"></p>
+        <div class="sheet-extra" id="sheet-extra"></div>
+      </div>
+    </div>
+    <div class="sheet-buttons">
+      <button class="btn btn-small" id="sheet-cancel">Cancel</button>
+      <button class="btn btn-default" id="sheet-ok">OK</button>
+    </div>
+  </div>
+
+</div>
+
+<script>window.KS_TOKEN = "__KS_TOKEN__";</script>
+<script src="app.js"></script>
+</body>
+</html>

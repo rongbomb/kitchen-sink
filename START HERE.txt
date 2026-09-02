@@ -1,0 +1,56 @@
+Kitchen Sink — Windows portable copy
+====================================
+
+Copy this entire folder to your laptop (USB drive, OneDrive, etc.).
+Nothing installs into Windows itself — everything stays inside this folder.
+
+FIRST TIME ON A NEW PC
+----------------------
+1. Install Python 3.9 or newer (one-time):
+   https://www.python.org/downloads/windows/
+   IMPORTANT: check "Add python.exe to PATH" at the bottom of the installer.
+
+2. Double-click:  setup.bat
+   Waits a few minutes while it creates .venv, downloads libraries, and ffmpeg.
+
+3. Double-click:  Kitchen Sink.bat
+   The Aqua window opens. Paste a YouTube or SoundCloud link and press Download.
+
+EVERY DAY AFTER THAT
+--------------------
+Just double-click  Kitchen Sink.bat  — no setup again.
+
+IF DOWNLOADS STOP WORKING
+-------------------------
+Double-click  update.bat  (YouTube changes often; yt-dlp fixes follow within days).
+
+REQUIREMENTS
+------------
+- Windows 10 or 11 (64-bit)
+- Internet for first setup and for downloading tracks
+- Microsoft Edge WebView2 (already on most Windows 10/11 PCs)
+  If the window is blank: https://go.microsoft.com/fwlink/p/?LinkId=2124703
+
+WHERE FILES GO
+--------------
+Downloads save to  Music\Kitchen Sink  in your user folder by default.
+Change the folder inside the app with "Choose…" next to Save to.
+
+IF SOMETHING GOES WRONG
+-----------------------
+Run  "Kitchen Sink (Debug).bat"  instead. It keeps a console open so errors
+are visible rather than disappearing, and it writes details to:
+  %APPDATA%\KitchenSink\error.log
+
+TROUBLESHOOTING
+---------------
+- "Python was not found" → install Python and tick Add to PATH, then run setup.bat again.
+  If typing "python" opens the Microsoft Store, that is a placeholder, not Python.
+  Turn it off: Settings > Apps > Advanced app settings > App execution aliases.
+- Blank white window → install WebView2 (link above).
+- Window opens but sits on "Starting…" → the engine is slow on first run while
+  it loads yt-dlp. It gives up after 20 seconds and stays usable either way.
+- SoundCloud 403 → Preferences → paste your oauth_token cookie value.
+
+This zip is the app only — your settings live in:
+  %APPDATA%\KitchenSink\settings.json
